@@ -3,26 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EKAKI UNIVERSE - Premium Study Material & Notes Platform</title>
-    <!-- Tailwind CSS -->
+    <title>EKAKI UNIVERSE - Premium Study Material Platform</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .line-clamp-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+    </style>
 </head>
-<body class="bg-slate-50 text-slate-800 font-sans antialiased">
+<body class="bg-slate-50 text-slate-800 font-sans antialiased selection:bg-sky-500 selection:text-white">
 
-    <!-- SUPER ADMIN SECURITY BAR -->
+    <!-- 1. SUPER ADMIN SECURITY BAR -->
     <div class="bg-slate-900 text-white px-4 py-2 flex items-center justify-between text-xs sticky top-0 z-50 shadow-md">
-        <span class="font-bold flex items-center gap-2"><i class="fa-solid fa-shield-halved text-amber-400"></i> EKAKI UNIVERSE | Super Admin Secure Panel</span>
-        <span class="text-emerald-400 font-semibold"><i class="fa-solid fa-circle-nodes"></i> Multi-Owner & Auto-Schedule Active</span>
+        <span class="font-bold flex items-center gap-2">
+            <i class="fa-solid fa-shield-halved text-amber-400"></i> EKAKI UNIVERSE | Super Admin Secure Panel
+        </span>
+        <span class="text-emerald-400 font-semibold flex items-center gap-1">
+            <i class="fa-solid fa-circle-check"></i> Multi-Owner & Auto-Schedule Active
+        </span>
     </div>
 
-    <!-- NAVBAR HEADER -->
+    <!-- 2. NAVBAR HEADER -->
     <header class="sticky top-7 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm px-4 py-3 flex items-center justify-between">
         <div class="flex items-center space-x-3">
-            <button onclick="toggleHamburgerMenu()" class="p-2 hover:bg-slate-100 rounded-lg text-slate-700 transition" title="Menu">
+            <button onclick="toggleHamburgerMenu()" class="p-2 hover:bg-slate-100 rounded-lg text-slate-700 transition" title="Open Menu">
                 <i class="fa-solid fa-bars text-xl"></i>
             </button>
-            <div class="font-extrabold text-xl text-sky-600 tracking-wider">
+            <div class="font-extrabold text-xl text-sky-600 tracking-wider cursor-pointer" onclick="window.location.reload()">
                 EKAKI UNIVERSE
             </div>
         </div>
@@ -32,7 +45,7 @@
         </div>
 
         <div class="flex items-center space-x-3">
-            <button onclick="openTelegramModal()" class="p-2 bg-sky-500 text-white rounded-full hover:bg-sky-600 transition shadow" title="Telegram Channels">
+            <button onclick="openTelegramModal()" class="p-2 bg-sky-500 text-white rounded-full hover:bg-sky-600 transition shadow" title="Telegram Hub">
                 <i class="fa-brands fa-telegram text-base"></i>
             </button>
             <button onclick="openBookmarksModal()" class="p-2 bg-slate-100 hover:bg-rose-50 rounded-full text-slate-600 relative transition" title="Saved Favorites">
@@ -42,61 +55,66 @@
         </div>
     </header>
 
-    <!-- ADVANCED HAMBURGER MENU SIDEBAR -->
+    <!-- 3. ADVANCED HAMBURGER MENU SIDEBAR -->
     <div id="hamburgerSidebar" class="fixed inset-y-0 left-0 z-50 w-80 bg-white shadow-2xl transform -translate-x-full transition-transform duration-300 flex flex-col justify-between">
         <div class="p-5 overflow-y-auto">
             <div class="flex items-center justify-between mb-6 border-b pb-4">
-                <h3 class="font-extrabold text-lg text-sky-600">EKAKI MENU</h3>
-                <button onclick="toggleHamburgerMenu()" class="p-2 text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-xl"></i></button>
+                <h3 class="font-extrabold text-lg text-sky-600">EKAKI NAVIGATION</h3>
+                <button onclick="toggleHamburgerMenu()" class="p-2 text-slate-400 hover:text-slate-600">
+                    <i class="fa-solid fa-xmark text-xl"></i>
+                </button>
             </div>
             
             <div class="space-y-4">
+                <!-- Profile Section -->
                 <div class="bg-sky-50 p-3 rounded-xl border border-sky-100">
-                    <p class="text-xs text-sky-700 font-bold uppercase">Student Profile</p>
-                    <p class="text-sm font-semibold text-slate-800">Anand Agarwal (Super Admin)</p>
+                    <p class="text-xs text-sky-700 font-bold uppercase">Super Admin Account</p>
+                    <p class="text-sm font-semibold text-slate-800">Owner Access (EKAKI Core)</p>
                 </div>
                 
+                <!-- Action Buttons -->
                 <div class="space-y-1">
-                    <button onclick="alert('Download History: All your downloaded files are synced here.')" class="w-full text-left px-3 py-2.5 rounded-lg hover:bg-slate-100 text-sm font-semibold text-slate-700 flex items-center gap-3">
+                    <button onclick="showDownloadHistory()" class="w-full text-left px-3 py-2.5 rounded-lg hover:bg-slate-100 text-sm font-semibold text-slate-700 flex items-center gap-3 transition">
                         <i class="fa-solid fa-clock-rotate-left text-sky-500"></i> Download History
                     </button>
-                    <button onclick="alert('User Activity: Real-time traffic metrics and logs active.')" class="w-full text-left px-3 py-2.5 rounded-lg hover:bg-slate-100 text-sm font-semibold text-slate-700 flex items-center gap-3">
+                    <button onclick="showUserActivity()" class="w-full text-left px-3 py-2.5 rounded-lg hover:bg-slate-100 text-sm font-semibold text-slate-700 flex items-center gap-3 transition">
                         <i class="fa-solid fa-chart-line text-emerald-500"></i> User Activity & Stats
                     </button>
-                    <button onclick="openTelegramModal()" class="w-full text-left px-3 py-2.5 rounded-lg hover:bg-slate-100 text-sm font-semibold text-slate-700 flex items-center gap-3">
-                        <i class="fa-brands fa-telegram text-sky-500"></i> Telegram Channels List
+                    <button onclick="openTelegramModal()" class="w-full text-left px-3 py-2.5 rounded-lg hover:bg-slate-100 text-sm font-semibold text-slate-700 flex items-center gap-3 transition">
+                        <i class="fa-brands fa-telegram text-sky-500"></i> Official Telegram Channels
                     </button>
                 </div>
 
-                <div class="pt-4 border-t">
+                <!-- 5-Star Rating Section -->
+                <div class="pt-4 border-t border-slate-200">
                     <p class="text-xs font-bold text-slate-400 uppercase mb-2">Rate Our Platform</p>
                     <div class="flex space-x-1 text-amber-400 text-lg">
-                        <i class="fa-solid fa-star cursor-pointer" onclick="alert('Thank you for your 5-Star feedback! ⭐⭐⭐⭐⭐')"></i>
-                        <i class="fa-solid fa-star cursor-pointer" onclick="alert('Thank you for your 5-Star feedback! ⭐⭐⭐⭐⭐')"></i>
-                        <i class="fa-solid fa-star cursor-pointer" onclick="alert('Thank you for your 5-Star feedback! ⭐⭐⭐⭐⭐')"></i>
-                        <i class="fa-solid fa-star cursor-pointer" onclick="alert('Thank you for your 5-Star feedback! ⭐⭐⭐⭐⭐')"></i>
-                        <i class="fa-solid fa-star cursor-pointer" onclick="alert('Thank you for your 5-Star feedback! ⭐⭐⭐⭐⭐')"></i>
+                        <i class="fa-solid fa-star cursor-pointer hover:scale-110 transition" onclick="submitFeedback(1)"></i>
+                        <i class="fa-solid fa-star cursor-pointer hover:scale-110 transition" onclick="submitFeedback(2)"></i>
+                        <i class="fa-solid fa-star cursor-pointer hover:scale-110 transition" onclick="submitFeedback(3)"></i>
+                        <i class="fa-solid fa-star cursor-pointer hover:scale-110 transition" onclick="submitFeedback(4)"></i>
+                        <i class="fa-solid fa-star cursor-pointer hover:scale-110 transition" onclick="submitFeedback(5)"></i>
                     </div>
                 </div>
             </div>
         </div>
         <div class="p-4 bg-slate-50 border-t text-center text-xs text-slate-400 font-medium">
-            EKAKI UNIVERSE v3.0 | Secure Cloud Engine
+            EKAKI UNIVERSE v5.0 | Master Blueprint Active
         </div>
     </div>
     <div id="sidebarOverlay" onclick="toggleHamburgerMenu()" class="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm hidden"></div>
 
-    <!-- MAIN CONTAINER -->
+    <!-- 4. MAIN CONTENT AREA -->
     <main class="max-w-7xl mx-auto px-4 py-6">
         
-        <!-- Smart Search Bar -->
+        <!-- Search Input -->
         <div class="relative mb-6">
-            <input type="text" id="searchInput" onkeyup="renderGrid()" placeholder="Search material e.g. Sample Paper, Science Notes, PYQ..." 
+            <input type="text" id="searchInput" onkeyup="renderGrid()" placeholder="Search material e.g. Sample Paper, Science Notes, PYQ, DPP..." 
                 class="w-full pl-11 pr-4 py-3.5 bg-white border border-slate-300 rounded-2xl shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-500 text-sm">
             <i class="fa-solid fa-magnifying-glass text-slate-400 absolute left-4 top-4"></i>
         </div>
 
-        <!-- Custom Filter Chips (Sample Paper, Notes, PYQ, DPP) -->
+        <!-- Custom Owner Filter Chips -->
         <div class="flex items-center space-x-2 overflow-x-auto pb-4 mb-4">
             <button onclick="setFilter('ALL')" id="btn-ALL" class="filter-chip px-4 py-2 bg-sky-600 text-white rounded-xl text-sm font-semibold shadow-sm whitespace-nowrap transition">ALL</button>
             <button onclick="setFilter('Sample Paper')" id="btn-Sample Paper" class="filter-chip px-4 py-2 bg-white text-slate-600 border border-slate-200 rounded-xl text-sm font-semibold hover:bg-slate-100 whitespace-nowrap transition">Sample Paper</button>
@@ -105,33 +123,32 @@
             <button onclick="setFilter('DPP')" id="btn-DPP" class="filter-chip px-4 py-2 bg-white text-slate-600 border border-slate-200 rounded-xl text-sm font-semibold hover:bg-slate-100 whitespace-nowrap transition">DPP</button>
         </div>
 
-        <!-- CLEAN 3-COLUMN MATERIAL GRID (No Sub-folders) -->
+        <!-- CLEAN 3-COLUMN MATERIAL GRID -->
         <div id="materialGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
 
-        <!-- TELEGRAM FALLBACK BOX (Shown if search yields nothing) -->
+        <!-- TELEGRAM FALLBACK BOX -->
         <div id="telegramFallback" class="hidden my-8 bg-sky-50 border border-sky-200 rounded-2xl p-8 text-center">
             <div class="w-12 h-12 bg-sky-500 text-white rounded-full flex items-center justify-center mx-auto mb-3 text-xl shadow">
                 <i class="fa-brands fa-telegram"></i>
             </div>
-            <h3 class="font-bold text-lg text-slate-800 mb-2">Material Not Found on Search?</h3>
-            <p class="text-sm text-slate-600 mb-4">Don't worry! Request any book or notes directly in our Telegram Request Group or ask our Support Bot.</p>
+            <h3 class="font-bold text-lg text-slate-800 mb-2">Requested Material Not Found?</h3>
+            <p class="text-sm text-slate-600 mb-4">Aap aaram se hamare Telegram Book Request Group par demand bhej sakte hain!</p>
             <a href="https://telegram.me" target="_blank" class="inline-block bg-sky-600 hover:bg-sky-700 text-white font-bold px-6 py-2.5 rounded-xl transition shadow">
-                Join Telegram Request Group 🚀
+                Request Book on Telegram 🚀
             </a>
         </div>
 
     </main>
 
-    <!-- DOWNLOAD PREVIEW MODAL (Fast Flow + Recurring AdSense Slot) -->
+    <!-- 5. DOWNLOAD PREVIEW MODAL -->
     <div id="downloadModal" class="hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl max-w-md w-full p-6 relative shadow-2xl">
             <button onclick="closeDownloadModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 text-lg font-bold">✕</button>
-            <h3 id="modalTitle" class="font-bold text-lg text-slate-800 mb-2">Material Title</h3>
-            <img id="modalThumb" src="" alt="Thumbnail" class="w-full h-40 object-cover rounded-xl mb-4 shadow-sm">
+            <h3 id="modalTitle" class="font-bold text-lg text-slate-800 mb-2 line-clamp-2">Material Title</h3>
+            <img id="modalThumb" src="" alt="Thumbnail" class="w-full h-40 object-cover rounded-xl mb-4 shadow-sm border">
             
-            <!-- AdSense Banner Slot inside Preview Modal -->
             <div class="bg-amber-50 border border-amber-200 p-3 rounded-xl text-center text-xs text-amber-700 font-semibold mb-4">
-                ⚡ Sponsored AdSense Banner Slot (Fast Download Flow)
+                📢 Sponsored AdSense Banner Slot (Monetization Space)
             </div>
 
             <a id="modalLink" href="#" target="_blank" onclick="closeDownloadModal()" class="w-full block text-center py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl transition shadow-lg">
@@ -140,15 +157,15 @@
         </div>
     </div>
 
-    <!-- TELEGRAM CHANNELS LIST MODAL -->
+    <!-- 6. TELEGRAM CHANNELS POPUP -->
     <div id="telegramModal" class="hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl max-w-md w-full p-6 relative shadow-2xl text-center">
             <button onclick="closeTelegramModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 text-lg font-bold">✕</button>
             <div class="w-12 h-12 bg-sky-100 text-sky-500 rounded-full flex items-center justify-center mx-auto mb-3 text-2xl">
                 <i class="fa-brands fa-telegram"></i>
             </div>
-            <h3 class="font-bold text-xl text-slate-800 mb-2">Official Telegram Hub</h3>
-            <p class="text-sm text-slate-600 mb-4">Join all verified channels for Class 10, Class 12, DPPs, and Live Updates!</p>
+            <h3 class="font-bold text-xl text-slate-800 mb-2">EKAKI Telegram Channels</h3>
+            <p class="text-sm text-slate-600 mb-4">Join official channels for Class 10, Class 12, Notes, and Live Updates!</p>
             <div class="space-y-2">
                 <a href="https://telegram.me" target="_blank" class="w-full block text-center py-2.5 bg-sky-500 hover:bg-sky-600 text-white font-semibold rounded-xl transition">📢 UDDAN Main Channel</a>
                 <a href="https://telegram.me" target="_blank" class="w-full block text-center py-2.5 bg-sky-600 hover:bg-sky-700 text-white font-semibold rounded-xl transition">📚 Book Request & Support Group</a>
@@ -156,17 +173,18 @@
         </div>
     </div>
 
-    <!-- FULL JAVASCRIPT ENGINE -->
+    <!-- 7. APPLICATION LOGIC -->
     <script>
         const materialsData = [
             { id: 'm1', title: 'Next Topper Sample Paper Class 10 Science 2026', category: 'Sample Paper', thumb: 'https://images.unsplash.com/photo-1543269865-cbf427effbad?w=500&auto=format&fit=crop&q=60', link: 'https://gplinks.co/sample1', featured: true },
-            { id: 'm2', title: 'Physics Chapterwise Handwritten Notes UDDAN', category: 'Notes', thumb: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=500&auto=format&fit=crop&q=60', link: 'https://gplinks.co/sample2', featured: false },
-            { id: 'm3', title: 'Mathematics Previous Year Questions 2024-2025', category: 'PYQ', thumb: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=500&auto=format&fit=crop&q=60', link: 'https://gplinks.co/sample3', featured: true },
+            { id: 'm2', title: 'Physics Chapterwise Handwritten Notes UDDAN Batch', category: 'Notes', thumb: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=500&auto=format&fit=crop&q=60', link: 'https://gplinks.co/sample2', featured: false },
+            { id: 'm3', title: 'Mathematics Previous Year Questions 2024-2025 Solved', category: 'PYQ', thumb: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=500&auto=format&fit=crop&q=60', link: 'https://gplinks.co/sample3', featured: true },
             { id: 'm4', title: 'Chemistry Daily Practice Paper (DPP) Set 01', category: 'DPP', thumb: 'https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=500&auto=format&fit=crop&q=60', link: 'https://gplinks.co/sample4', featured: false }
         ];
 
         let activeFilter = 'ALL';
         let bookmarkedIds = JSON.parse(localStorage.getItem('ekaki_bookmarks')) || [];
+        let downloadHistory = JSON.parse(localStorage.getItem('ekaki_history')) || [];
 
         function renderGrid() {
             const grid = document.getElementById('materialGrid');
@@ -193,14 +211,14 @@
                 card.className = "bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition flex flex-col justify-between";
                 card.innerHTML = `
                     <div class="relative">
-                        <img src="${item.thumb}" alt="${item.title}" class="w-full h-56 object-cover">
+                        <img src="${item.thumb}" alt="${item.title}" class="w-full h-52 object-cover">
                         ${item.featured ? '<span class="absolute top-3 left-3 bg-amber-500 text-white text-xs px-2.5 py-1 rounded-md font-bold uppercase shadow">Featured</span>' : ''}
                         <div class="absolute top-3 right-3 flex space-x-2">
                             <button onclick="copyDirectLink('${item.title}')" class="p-2 bg-white/90 backdrop-blur-md rounded-full shadow hover:bg-white text-slate-700 transition" title="Copy Link">
                                 <i class="fa-solid fa-share-nodes text-xs"></i>
                             </button>
                             <button onclick="toggleBookmark('${item.id}')" class="p-2 bg-white/90 backdrop-blur-md rounded-full shadow hover:bg-white transition" title="Save">
-                                <i class="fa-solid fa-heart ${isBookmarked ? 'text-rose-500 fill-rose-500' : 'text-slate-600'} text-xs"></i>
+                                <i class="fa-solid fa-heart ${isBookmarked ? 'text-rose-500 fill-rose-500' : 'text-slate-400'} text-xs"></i>
                             </button>
                         </div>
                     </div>
@@ -214,11 +232,10 @@
                 `;
                 grid.appendChild(card);
 
-                // Recurring AdSense Banner Slot after every 3 items
                 if ((index + 1) % 3 === 0) {
                     let adSlot = document.createElement('div');
                     adSlot.className = "col-span-full py-4 px-6 bg-slate-100 border border-dashed border-slate-300 rounded-2xl text-center text-slate-400 font-medium text-sm";
-                    adSlot.innerHTML = `📢 AdSense Banner Slot (High Revenue Optimized)`;
+                    adSlot.innerHTML = `📢 AdSense Banner Slot (Monetization Space)`;
                     grid.appendChild(adSlot);
                 }
             });
@@ -237,10 +254,8 @@
         function toggleBookmark(id) {
             if (bookmarkedIds.includes(id)) {
                 bookmarkedIds = bookmarkedIds.filter(item => item !== id);
-                alert("Removed from favorites!");
             } else {
                 bookmarkedIds.push(id);
-                alert("Added to favorites ❤️");
             }
             localStorage.setItem('ekaki_bookmarks', JSON.stringify(bookmarkedIds));
             renderGrid();
@@ -260,6 +275,11 @@
             document.getElementById('modalThumb').src = thumb;
             document.getElementById('modalLink').href = link;
             document.getElementById('downloadModal').classList.remove('hidden');
+
+            if (!downloadHistory.includes(title)) {
+                downloadHistory.push(title);
+                localStorage.setItem('ekaki_history', JSON.stringify(downloadHistory));
+            }
         }
 
         function closeDownloadModal() {
@@ -274,7 +294,7 @@
         }
 
         function openTelegramModal() {
-            document.getElementById('telegramModal').classList.toggle('hidden');
+            document.getElementById('telegramModal').classList.remove('hidden');
         }
 
         function closeTelegramModal() {
@@ -283,10 +303,26 @@
 
         function openBookmarksModal() {
             if(bookmarkedIds.length === 0) {
-                alert("No saved bookmarks yet! Click the heart icon on any material to save it.");
+                alert("Abhi koi saved bookmark nahi hai!");
             } else {
-                alert("You have " + bookmarkedIds.length + " saved material(s) in your favorites!");
+                alert("Aapke paas " + bookmarkedIds.length + " saved material(s) hain!");
             }
+        }
+
+        function showDownloadHistory() {
+            if (downloadHistory.length === 0) {
+                alert("Abhi tak koi download history nahi hai.");
+            } else {
+                alert("Recent Downloads:\n- " + downloadHistory.join("\n- "));
+            }
+        }
+
+        function showUserActivity() {
+            alert("User Activity: Active Session Verified | Super Admin Security Status: Normal");
+        }
+
+        function submitFeedback(stars) {
+            alert("Feedback received: " + stars + " Star Rating! Thank you ⭐");
         }
 
         window.onload = renderGrid;
