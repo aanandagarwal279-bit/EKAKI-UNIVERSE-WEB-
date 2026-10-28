@@ -4,35 +4,52 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EKAKI UNIVERSE - Premium Study Material & Notes</title>
-    <!-- Tailwind CSS for Modern UI -->
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .editable:hover { outline: 2px dashed #0284c7; cursor: pointer; }
+    </style>
 </head>
-<body class="bg-slate-50 text-slate-800 font-sans">
+<body id="mainBody" class="bg-slate-50 text-slate-800 font-sans transition-colors duration-300">
+
+    <!-- ADMIN FLOATING TOOLBAR (Only for Owner) -->
+    <div class="bg-slate-900 text-white px-4 py-2 flex items-center justify-between text-xs sticky top-0 z-50 shadow-md">
+        <span class="font-bold flex items-center gap-2"><i class="fa-solid fa-shield-halved text-amber-400"></i> EKAKI UNIVERSE ADMIN CONTROL</span>
+        <div class="flex items-center space-x-3">
+            <label class="cursor-pointer flex items-center gap-1">
+                <span>Theme Color:</span>
+                <input type="color" id="themeColorPicker" onchange="changeThemeColor(this.value)" value="#0284c7" class="w-6 h-6 rounded cursor-pointer border-0">
+            </label>
+            <button onclick="toggleEditMode()" id="editToggleBtn" class="bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold px-3 py-1 rounded transition">
+                ✏️ Enable Direct Edit Mode
+            </button>
+        </div>
+    </div>
 
     <!-- NAVBAR HEADER -->
-    <header class="sticky top-0 z-40 bg-white border-b border-slate-200 shadow-sm px-4 py-3 flex items-center justify-between">
+    <header class="sticky top-9 z-40 bg-white border-b border-slate-200 shadow-sm px-4 py-3 flex items-center justify-between">
         <div class="flex items-center space-x-3">
-            <button class="p-2 hover:bg-slate-100 rounded-lg text-slate-700">
+            <button onclick="alert('Hamburger Menu: Profile, History & Telegram Channels!')" class="p-2 hover:bg-slate-100 rounded-lg text-slate-700">
                 <i class="fa-solid fa-bars text-xl"></i>
             </button>
-            <div class="font-extrabold text-xl text-sky-600 tracking-wider">
+            <div id="siteTitle" class="font-extrabold text-xl text-sky-600 tracking-wider">
                 EKAKI UNIVERSE
             </div>
         </div>
 
-        <div class="hidden md:block font-medium text-sm text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
+        <div id="siteTagline" class="hidden md:block font-medium text-sm text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
             ✨ Premium Quality Study Material & Notes Platform
         </div>
 
         <div class="flex items-center space-x-3">
-            <button class="p-2 bg-sky-500 text-white rounded-full hover:bg-sky-600 transition shadow" title="Telegram Channels">
+            <button onclick="alert('Telegram Channels Popup!')" class="p-2 bg-sky-500 text-white rounded-full hover:bg-sky-600 transition shadow" title="Telegram Channels">
                 <i class="fa-brands fa-telegram"></i>
             </button>
-            <button class="p-2 bg-slate-100 hover:bg-rose-50 rounded-full text-slate-600 relative" title="Saved Items">
+            <button onclick="alert('Saved Favorites ❤️')" class="p-2 bg-slate-100 hover:bg-rose-50 rounded-full text-slate-600 relative" title="Saved Items">
                 <i class="fa-solid fa-heart text-lg"></i>
             </button>
-            <button class="bg-sky-600 text-white px-4 py-1.5 rounded-lg text-sm font-semibold hover:bg-sky-700 transition shadow">
+            <button onclick="alert('Login / Admin Panel Modal!')" class="bg-sky-600 text-white px-4 py-1.5 rounded-lg text-sm font-semibold hover:bg-sky-700 transition shadow">
                 Login
             </button>
         </div>
@@ -43,36 +60,35 @@
         
         <!-- Search Bar -->
         <div class="relative mb-6">
-            <input type="text" placeholder="Search material e.g. Sample Paper, Notes..." 
+            <input type="text" id="searchInput" onkeyup="searchMaterials()" placeholder="Search material e.g. Sample Paper, Notes..." 
                 class="w-full pl-11 pr-4 py-3 bg-white border border-slate-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-500">
             <i class="fa-solid fa-magnifying-glass text-slate-400 absolute left-4 top-4"></i>
         </div>
 
         <!-- Filter Chips -->
         <div class="flex items-center space-x-2 overflow-x-auto pb-4 mb-4">
-            <button class="px-4 py-2 bg-sky-600 text-white rounded-lg text-sm font-semibold shadow-sm whitespace-nowrap">ALL</button>
-            <button class="px-4 py-2 bg-white text-slate-600 border border-slate-200 rounded-lg text-sm font-semibold hover:bg-slate-100 whitespace-nowrap">Sample Paper</button>
-            <button class="px-4 py-2 bg-white text-slate-600 border border-slate-200 rounded-lg text-sm font-semibold hover:bg-slate-100 whitespace-nowrap">Notes</button>
-            <button class="px-4 py-2 bg-white text-slate-600 border border-slate-200 rounded-lg text-sm font-semibold hover:bg-slate-100 whitespace-nowrap">PYQ</button>
-            <button class="px-4 py-2 bg-white text-slate-600 border border-slate-200 rounded-lg text-sm font-semibold hover:bg-slate-100 whitespace-nowrap">DPP</button>
+            <button onclick="filterCards('ALL')" class="px-4 py-2 bg-sky-600 text-white rounded-lg text-sm font-semibold shadow-sm whitespace-nowrap">ALL</button>
+            <button onclick="filterCards('Sample Paper')" class="px-4 py-2 bg-white text-slate-600 border border-slate-200 rounded-lg text-sm font-semibold hover:bg-slate-100 whitespace-nowrap">Sample Paper</button>
+            <button onclick="filterCards('Notes')" class="px-4 py-2 bg-white text-slate-600 border border-slate-200 rounded-lg text-sm font-semibold hover:bg-slate-100 whitespace-nowrap">Notes</button>
+            <button onclick="filterCards('PYQ')" class="px-4 py-2 bg-white text-slate-600 border border-slate-200 rounded-lg text-sm font-semibold hover:bg-slate-100 whitespace-nowrap">PYQ</button>
         </div>
 
         <!-- 3-COLUMN MATERIAL GRID -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div id="materialGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             
             <!-- Card 1 -->
-            <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition flex flex-col justify-between">
+            <div class="material-card bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition flex flex-col justify-between" data-category="Sample Paper">
                 <div class="relative">
                     <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?w=500&auto=format&fit=crop&q=60" alt="Material" class="w-full h-56 object-cover">
                     <span class="absolute top-3 left-3 bg-amber-500 text-white text-xs px-2.5 py-1 rounded-md font-bold uppercase">Featured</span>
                     <div class="absolute top-3 right-3 flex space-x-2">
-                        <button class="p-2 bg-white/90 backdrop-blur-md rounded-full shadow hover:bg-white text-slate-700" title="Copy Link"><i class="fa-solid fa-share-nodes"></i></button>
-                        <button class="p-2 bg-white/90 backdrop-blur-md rounded-full shadow hover:bg-white text-slate-600"><i class="fa-solid fa-heart"></i></button>
+                        <button onclick="alert('Link Copied!')" class="p-2 bg-white/90 backdrop-blur-md rounded-full shadow hover:bg-white text-slate-700" title="Copy Link"><i class="fa-solid fa-share-nodes"></i></button>
+                        <button onclick="alert('Saved ❤️')" class="p-2 bg-white/90 backdrop-blur-md rounded-full shadow hover:bg-white text-slate-600"><i class="fa-solid fa-heart"></i></button>
                     </div>
                 </div>
                 <div class="p-4 flex-1 flex flex-col justify-between">
-                    <h4 class="font-bold text-slate-800 text-base mb-4">Next Topper Sample Paper Class 10 Science 2026</h4>
-                    <button onclick="alert('Opening Preview & Download Page!')" class="w-full py-2.5 bg-emerald-600 text-white font-semibold rounded-xl hover:bg-emerald-700 flex items-center justify-center space-x-2 transition shadow">
+                    <h4 class="card-title font-bold text-slate-800 text-base mb-4">Next Topper Sample Paper Class 10 Science 2026</h4>
+                    <button onclick="alert('Opening Fast Download Preview & Ad Banner!')" class="w-full py-2.5 bg-emerald-600 text-white font-semibold rounded-xl hover:bg-emerald-700 flex items-center justify-center space-x-2 transition shadow">
                         <i class="fa-solid fa-download"></i>
                         <span>Download Material</span>
                     </button>
@@ -80,17 +96,17 @@
             </div>
 
             <!-- Card 2 -->
-            <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition flex flex-col justify-between">
+            <div class="material-card bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition flex flex-col justify-between" data-category="Notes">
                 <div class="relative">
                     <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=500&auto=format&fit=crop&q=60" alt="Material" class="w-full h-56 object-cover">
                     <div class="absolute top-3 right-3 flex space-x-2">
-                        <button class="p-2 bg-white/90 backdrop-blur-md rounded-full shadow hover:bg-white text-slate-700" title="Copy Link"><i class="fa-solid fa-share-nodes"></i></button>
-                        <button class="p-2 bg-white/90 backdrop-blur-md rounded-full shadow hover:bg-white text-slate-600"><i class="fa-solid fa-heart"></i></button>
+                        <button onclick="alert('Link Copied!')" class="p-2 bg-white/90 backdrop-blur-md rounded-full shadow hover:bg-white text-slate-700" title="Copy Link"><i class="fa-solid fa-share-nodes"></i></button>
+                        <button onclick="alert('Saved ❤️')" class="p-2 bg-white/90 backdrop-blur-md rounded-full shadow hover:bg-white text-slate-600"><i class="fa-solid fa-heart"></i></button>
                     </div>
                 </div>
                 <div class="p-4 flex-1 flex flex-col justify-between">
-                    <h4 class="font-bold text-slate-800 text-base mb-4">Physics Chapterwise Handwritten Notes UDDAN</h4>
-                    <button onclick="alert('Opening Preview & Download Page!')" class="w-full py-2.5 bg-emerald-600 text-white font-semibold rounded-xl hover:bg-emerald-700 flex items-center justify-center space-x-2 transition shadow">
+                    <h4 class="card-title font-bold text-slate-800 text-base mb-4">Physics Chapterwise Handwritten Notes UDDAN</h4>
+                    <button onclick="alert('Opening Fast Download Preview & Ad Banner!')" class="w-full py-2.5 bg-emerald-600 text-white font-semibold rounded-xl hover:bg-emerald-700 flex items-center justify-center space-x-2 transition shadow">
                         <i class="fa-solid fa-download"></i>
                         <span>Download Material</span>
                     </button>
@@ -98,18 +114,18 @@
             </div>
 
             <!-- Card 3 -->
-            <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition flex flex-col justify-between">
+            <div class="material-card bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition flex flex-col justify-between" data-category="PYQ">
                 <div class="relative">
                     <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=500&auto=format&fit=crop&q=60" alt="Material" class="w-full h-56 object-cover">
                     <span class="absolute top-3 left-3 bg-amber-500 text-white text-xs px-2.5 py-1 rounded-md font-bold uppercase">Featured</span>
                     <div class="absolute top-3 right-3 flex space-x-2">
-                        <button class="p-2 bg-white/90 backdrop-blur-md rounded-full shadow hover:bg-white text-slate-700" title="Copy Link"><i class="fa-solid fa-share-nodes"></i></button>
-                        <button class="p-2 bg-white/90 backdrop-blur-md rounded-full shadow hover:bg-white text-slate-600"><i class="fa-solid fa-heart"></i></button>
+                        <button onclick="alert('Link Copied!')" class="p-2 bg-white/90 backdrop-blur-md rounded-full shadow hover:bg-white text-slate-700" title="Copy Link"><i class="fa-solid fa-share-nodes"></i></button>
+                        <button onclick="alert('Saved ❤️')" class="p-2 bg-white/90 backdrop-blur-md rounded-full shadow hover:bg-white text-slate-600"><i class="fa-solid fa-heart"></i></button>
                     </div>
                 </div>
                 <div class="p-4 flex-1 flex flex-col justify-between">
-                    <h4 class="font-bold text-slate-800 text-base mb-4">Mathematics Previous Year Questions 2024-2025</h4>
-                    <button onclick="alert('Opening Preview & Download Page!')" class="w-full py-2.5 bg-emerald-600 text-white font-semibold rounded-xl hover:bg-emerald-700 flex items-center justify-center space-x-2 transition shadow">
+                    <h4 class="card-title font-bold text-slate-800 text-base mb-4">Mathematics Previous Year Questions 2024-2025</h4>
+                    <button onclick="alert('Opening Fast Download Preview & Ad Banner!')" class="w-full py-2.5 bg-emerald-600 text-white font-semibold rounded-xl hover:bg-emerald-700 flex items-center justify-center space-x-2 transition shadow">
                         <i class="fa-solid fa-download"></i>
                         <span>Download Material</span>
                     </button>
@@ -125,5 +141,63 @@
 
     </main>
 
+    <!-- SCRIPT FOR EDITING & CUSTOMIZATION -->
+    <script>
+        let isEditing = false;
+
+        function toggleEditMode() {
+            isEditing = !isEditing;
+            let btn = document.getElementById('editToggleBtn');
+            let elements = document.querySelectorAll('.card-title, #siteTitle, #siteTagline');
+            
+            if (isEditing) {
+                btn.innerText = "💾 Save Edits (Active)";
+                btn.classList.remove('bg-amber-500', 'hover:bg-amber-600');
+                btn.classList.add('bg-emerald-500', 'hover:bg-emerald-600', 'text-white');
+                elements.forEach(el => {
+                    el.contentEditable = "true";
+                    el.classList.add('editable');
+                });
+                alert("Edit Mode Enabled! Ab aap website par kisi bhi title ya text par click karke direct change kar sakte hain.");
+            } else {
+                btn.innerText = "✏️ Enable Direct Edit Mode";
+                btn.classList.remove('bg-emerald-500', 'hover:bg-emerald-600', 'text-white');
+                btn.classList.add('bg-amber-500', 'hover:bg-amber-600');
+                elements.forEach(el => {
+                    el.contentEditable = "false";
+                    el.classList.remove('editable');
+                });
+                alert("Changes saved locally on your screen!");
+            }
+        }
+
+        function changeThemeColor(color) {
+            document.getElementById('siteTitle').style.color = color;
+        }
+
+        function searchMaterials() {
+            let input = document.getElementById('searchInput').value.toLowerCase();
+            let cards = document.getElementsByClassName('material-card');
+            for (let i = 0; i < cards.length; i++) {
+                let title = cards[i].getElementsByClassName('card-title')[0].innerText.toLowerCase();
+                if (title.includes(input)) {
+                    cards[i].style.display = "";
+                } else {
+                    cards[i].style.display = "none";
+                }
+            }
+        }
+
+        function filterCards(category) {
+            let cards = document.getElementsByClassName('material-card');
+            for (let i = 0; i < cards.length; i++) {
+                if (category === 'ALL' || cards[i].getAttribute('data-category') === category) {
+                    cards[i].style.display = "";
+                } else {
+                    cards[i].style.display = "none";
+                }
+            }
+        }
+    </script>
 </body>
 </html>
