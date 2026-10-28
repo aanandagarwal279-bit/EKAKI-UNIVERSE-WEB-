@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EKAKI UNIVERSE - Premium Study Material Platform</title>
+    <title>EKAKI UNIVERSE - Premium Study & Notes Platform</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome Icons -->
+    <!-- FontAwesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         .line-clamp-2 {
@@ -19,14 +19,19 @@
 </head>
 <body class="bg-slate-50 text-slate-800 font-sans antialiased selection:bg-sky-500 selection:text-white">
 
-    <!-- 1. SUPER ADMIN SECURITY BAR -->
+    <!-- 1. SUPER ADMIN SECURITY BAR & CMS CONTROL -->
     <div class="bg-slate-900 text-white px-4 py-2 flex items-center justify-between text-xs sticky top-0 z-50 shadow-md">
         <span class="font-bold flex items-center gap-2">
-            <i class="fa-solid fa-shield-halved text-amber-400"></i> EKAKI UNIVERSE | Super Admin Secure Panel
+            <i class="fa-solid fa-shield-halved text-amber-400"></i> EKAKI UNIVERSE | Super Admin Secure System
         </span>
-        <span class="text-emerald-400 font-semibold flex items-center gap-1">
-            <i class="fa-solid fa-circle-check"></i> Multi-Owner & Auto-Schedule Active
-        </span>
+        <div class="flex items-center gap-2">
+            <button onclick="openFolderAdminModal()" class="bg-sky-600 hover:bg-sky-700 text-white px-2.5 py-1 rounded font-semibold transition">
+                <i class="fa-solid fa-folder-plus"></i> + Add Folder
+            </button>
+            <button onclick="openMaterialAdminModal()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-2.5 py-1 rounded font-semibold transition">
+                <i class="fa-solid fa-file-circle-plus"></i> + Add Material
+            </button>
+        </div>
     </div>
 
     <!-- 2. NAVBAR HEADER -->
@@ -35,13 +40,13 @@
             <button onclick="toggleHamburgerMenu()" class="p-2 hover:bg-slate-100 rounded-lg text-slate-700 transition" title="Open Menu">
                 <i class="fa-solid fa-bars text-xl"></i>
             </button>
-            <div class="font-extrabold text-xl text-sky-600 tracking-wider cursor-pointer" onclick="window.location.reload()">
+            <div class="font-extrabold text-xl text-sky-600 tracking-wider cursor-pointer" onclick="goHome()">
                 EKAKI UNIVERSE
             </div>
         </div>
 
         <div class="hidden md:block font-medium text-sm text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
-            ✨ Premium Quality Study Material & Notes Platform
+            ✨ Premium Quality Study Material Platform
         </div>
 
         <div class="flex items-center space-x-3">
@@ -66,13 +71,11 @@
             </div>
             
             <div class="space-y-4">
-                <!-- Profile Section -->
                 <div class="bg-sky-50 p-3 rounded-xl border border-sky-100">
-                    <p class="text-xs text-sky-700 font-bold uppercase">Super Admin Account</p>
-                    <p class="text-sm font-semibold text-slate-800">Owner Access (EKAKI Core)</p>
+                    <p class="text-xs text-sky-700 font-bold uppercase">Student Profile</p>
+                    <p class="text-sm font-semibold text-slate-800">Super Admin Access (EKAKI Core)</p>
                 </div>
                 
-                <!-- Action Buttons -->
                 <div class="space-y-1">
                     <button onclick="showDownloadHistory()" class="w-full text-left px-3 py-2.5 rounded-lg hover:bg-slate-100 text-sm font-semibold text-slate-700 flex items-center gap-3 transition">
                         <i class="fa-solid fa-clock-rotate-left text-sky-500"></i> Download History
@@ -85,9 +88,8 @@
                     </button>
                 </div>
 
-                <!-- 5-Star Rating Section -->
                 <div class="pt-4 border-t border-slate-200">
-                    <p class="text-xs font-bold text-slate-400 uppercase mb-2">Rate Our Platform</p>
+                    <p class="text-xs font-bold text-slate-400 uppercase mb-2">Platform Rating & Feedback</p>
                     <div class="flex space-x-1 text-amber-400 text-lg">
                         <i class="fa-solid fa-star cursor-pointer hover:scale-110 transition" onclick="submitFeedback(1)"></i>
                         <i class="fa-solid fa-star cursor-pointer hover:scale-110 transition" onclick="submitFeedback(2)"></i>
@@ -99,23 +101,32 @@
             </div>
         </div>
         <div class="p-4 bg-slate-50 border-t text-center text-xs text-slate-400 font-medium">
-            EKAKI UNIVERSE v5.0 | Master Blueprint Active
+            EKAKI UNIVERSE v7.0 | Fully Editable CMS Core
         </div>
     </div>
     <div id="sidebarOverlay" onclick="toggleHamburgerMenu()" class="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm hidden"></div>
 
-    <!-- 4. MAIN CONTENT AREA -->
+    <!-- 4. MAIN CONTAINER -->
     <main class="max-w-7xl mx-auto px-4 py-6">
         
-        <!-- Search Input -->
+        <!-- Search Bar -->
         <div class="relative mb-6">
-            <input type="text" id="searchInput" onkeyup="renderGrid()" placeholder="Search material e.g. Sample Paper, Science Notes, PYQ, DPP..." 
+            <input type="text" id="searchInput" onkeyup="handleSearch()" placeholder="Search material e.g. Class 10, Physics, Sample Paper, PYQ..." 
                 class="w-full pl-11 pr-4 py-3.5 bg-white border border-slate-300 rounded-2xl shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-500 text-sm">
             <i class="fa-solid fa-magnifying-glass text-slate-400 absolute left-4 top-4"></i>
         </div>
 
-        <!-- Custom Owner Filter Chips -->
-        <div class="flex items-center space-x-2 overflow-x-auto pb-4 mb-4">
+        <!-- BREADCRUMB NAVIGATION -->
+        <div id="breadcrumb" class="flex items-center gap-2 text-sm text-slate-600 mb-4 bg-white px-4 py-2.5 rounded-xl border border-slate-200 shadow-sm font-medium">
+            <span class="text-sky-600 font-bold cursor-pointer" onclick="goHome()"><i class="fa-solid fa-house"></i> Home</span>
+            <span id="breadcrumbContent"></span>
+        </div>
+
+        <!-- FOLDER CHIPS SECTION -->
+        <div id="folderContainer" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 mb-6"></div>
+
+        <!-- OWNER CUSTOM FILTER CHIPS -->
+        <div class="flex items-center space-x-2 overflow-x-auto pb-4 mb-4 scrollbar-none">
             <button onclick="setFilter('ALL')" id="btn-ALL" class="filter-chip px-4 py-2 bg-sky-600 text-white rounded-xl text-sm font-semibold shadow-sm whitespace-nowrap transition">ALL</button>
             <button onclick="setFilter('Sample Paper')" id="btn-Sample Paper" class="filter-chip px-4 py-2 bg-white text-slate-600 border border-slate-200 rounded-xl text-sm font-semibold hover:bg-slate-100 whitespace-nowrap transition">Sample Paper</button>
             <button onclick="setFilter('Notes')" id="btn-Notes" class="filter-chip px-4 py-2 bg-white text-slate-600 border border-slate-200 rounded-xl text-sm font-semibold hover:bg-slate-100 whitespace-nowrap transition">Notes</button>
@@ -123,7 +134,7 @@
             <button onclick="setFilter('DPP')" id="btn-DPP" class="filter-chip px-4 py-2 bg-white text-slate-600 border border-slate-200 rounded-xl text-sm font-semibold hover:bg-slate-100 whitespace-nowrap transition">DPP</button>
         </div>
 
-        <!-- CLEAN 3-COLUMN MATERIAL GRID -->
+        <!-- 3-COLUMN MATERIAL GRID -->
         <div id="materialGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
 
         <!-- TELEGRAM FALLBACK BOX -->
@@ -131,24 +142,87 @@
             <div class="w-12 h-12 bg-sky-500 text-white rounded-full flex items-center justify-center mx-auto mb-3 text-xl shadow">
                 <i class="fa-brands fa-telegram"></i>
             </div>
-            <h3 class="font-bold text-lg text-slate-800 mb-2">Requested Material Not Found?</h3>
-            <p class="text-sm text-slate-600 mb-4">Aap aaram se hamare Telegram Book Request Group par demand bhej sakte hain!</p>
+            <h3 class="font-bold text-lg text-slate-800 mb-2">Material Not Found on Search?</h3>
+            <p class="text-sm text-slate-600 mb-4">Request any book or notes directly in our Telegram Request Group!</p>
             <a href="https://telegram.me" target="_blank" class="inline-block bg-sky-600 hover:bg-sky-700 text-white font-bold px-6 py-2.5 rounded-xl transition shadow">
-                Request Book on Telegram 🚀
+                Join Telegram Request Group 🚀
             </a>
         </div>
 
     </main>
 
-    <!-- 5. DOWNLOAD PREVIEW MODAL -->
+    <!-- 5. ADMIN MODAL: ADD / EDIT FOLDERS -->
+    <div id="folderAdminModal" class="hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 relative shadow-2xl">
+            <button onclick="closeFolderAdminModal()" class="absolute top-4 right-4 text-slate-400 font-bold">✕</button>
+            <h3 class="font-bold text-lg text-slate-800 mb-4"><i class="fa-solid fa-folder-plus text-sky-600"></i> Create New Folder</h3>
+            <div class="space-y-3">
+                <div>
+                    <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Folder Name</label>
+                    <input type="text" id="newFolderName" placeholder="e.g. Class 10, Class 12, Physics, Chemistry..." class="w-full p-2.5 border rounded-xl text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Icon Style</label>
+                    <select id="newFolderIcon" class="w-full p-2.5 border rounded-xl text-sm">
+                        <option value="fa-folder text-amber-500">📁 Folder Icon</option>
+                        <option value="fa-graduation-cap text-sky-500">🎓 Class Icon</option>
+                        <option value="fa-book text-emerald-500">📚 Subject Icon</option>
+                    </select>
+                </div>
+                <button onclick="createFolder()" class="w-full py-3 bg-sky-600 hover:bg-sky-700 text-white font-bold rounded-xl transition shadow">
+                    Create Folder 🚀
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 6. ADMIN MODAL: ADD / EDIT MATERIALS -->
+    <div id="materialAdminModal" class="hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-lg w-full p-6 relative shadow-2xl">
+            <button onclick="closeMaterialAdminModal()" class="absolute top-4 right-4 text-slate-400 font-bold">✕</button>
+            <h3 class="font-bold text-lg text-slate-800 mb-4"><i class="fa-solid fa-file-circle-plus text-emerald-600"></i> Add New Material</h3>
+            <div class="space-y-3">
+                <div>
+                    <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Material Title</label>
+                    <input type="text" id="newMatTitle" placeholder="e.g. Science Chapter 1 Notes 2026" class="w-full p-2.5 border rounded-xl text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Select Target Folder</label>
+                    <select id="newMatFolder" class="w-full p-2.5 border rounded-xl text-sm"></select>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Category Filter Tag</label>
+                    <select id="newMatCategory" class="w-full p-2.5 border rounded-xl text-sm">
+                        <option value="Sample Paper">Sample Paper</option>
+                        <option value="Notes">Notes</option>
+                        <option value="PYQ">PYQ</option>
+                        <option value="DPP">DPP</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Thumbnail Image URL</label>
+                    <input type="text" id="newMatThumb" placeholder="https://images.unsplash.com/..." class="w-full p-2.5 border rounded-xl text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Download Link (GP Links)</label>
+                    <input type="text" id="newMatLink" placeholder="https://gplinks.co/..." class="w-full p-2.5 border rounded-xl text-sm">
+                </div>
+                <button onclick="createMaterial()" class="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl transition shadow">
+                    Publish Material Live 🚀
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 7. DOWNLOAD PREVIEW MODAL -->
     <div id="downloadModal" class="hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl max-w-md w-full p-6 relative shadow-2xl">
-            <button onclick="closeDownloadModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 text-lg font-bold">✕</button>
+            <button onclick="closeDownloadModal()" class="absolute top-4 right-4 text-slate-400 font-bold">✕</button>
             <h3 id="modalTitle" class="font-bold text-lg text-slate-800 mb-2 line-clamp-2">Material Title</h3>
-            <img id="modalThumb" src="" alt="Thumbnail" class="w-full h-40 object-cover rounded-xl mb-4 shadow-sm border">
+            <img id="modalThumb" src="" alt="Thumbnail" class="w-full h-40 object-cover rounded-xl mb-4 border">
             
             <div class="bg-amber-50 border border-amber-200 p-3 rounded-xl text-center text-xs text-amber-700 font-semibold mb-4">
-                📢 Sponsored AdSense Banner Slot (Monetization Space)
+                📢 Sponsored AdSense Banner Slot (Fast Monetization Flow)
             </div>
 
             <a id="modalLink" href="#" target="_blank" onclick="closeDownloadModal()" class="w-full block text-center py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl transition shadow-lg">
@@ -157,175 +231,76 @@
         </div>
     </div>
 
-    <!-- 6. TELEGRAM CHANNELS POPUP -->
+    <!-- 8. TELEGRAM POPUP -->
     <div id="telegramModal" class="hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl max-w-md w-full p-6 relative shadow-2xl text-center">
-            <button onclick="closeTelegramModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 text-lg font-bold">✕</button>
+            <button onclick="closeTelegramModal()" class="absolute top-4 right-4 font-bold">✕</button>
             <div class="w-12 h-12 bg-sky-100 text-sky-500 rounded-full flex items-center justify-center mx-auto mb-3 text-2xl">
                 <i class="fa-brands fa-telegram"></i>
             </div>
             <h3 class="font-bold text-xl text-slate-800 mb-2">EKAKI Telegram Channels</h3>
-            <p class="text-sm text-slate-600 mb-4">Join official channels for Class 10, Class 12, Notes, and Live Updates!</p>
+            <p class="text-sm text-slate-600 mb-4">Join official channels for Class 10, Class 12, and Live Notes!</p>
             <div class="space-y-2">
-                <a href="https://telegram.me" target="_blank" class="w-full block text-center py-2.5 bg-sky-500 hover:bg-sky-600 text-white font-semibold rounded-xl transition">📢 UDDAN Main Channel</a>
-                <a href="https://telegram.me" target="_blank" class="w-full block text-center py-2.5 bg-sky-600 hover:bg-sky-700 text-white font-semibold rounded-xl transition">📚 Book Request & Support Group</a>
+                <a href="https://telegram.me" target="_blank" class="w-full block text-center py-2.5 bg-sky-500 text-white font-semibold rounded-xl">📢 UDDAN Main Channel</a>
+                <a href="https://telegram.me" target="_blank" class="w-full block text-center py-2.5 bg-sky-600 text-white font-semibold rounded-xl">📚 Book Request & Support Group</a>
             </div>
         </div>
     </div>
 
-    <!-- 7. APPLICATION LOGIC -->
+    <!-- 9. ENGINE APPLICATION LOGIC -->
     <script>
-        const materialsData = [
-            { id: 'm1', title: 'Next Topper Sample Paper Class 10 Science 2026', category: 'Sample Paper', thumb: 'https://images.unsplash.com/photo-1543269865-cbf427effbad?w=500&auto=format&fit=crop&q=60', link: 'https://gplinks.co/sample1', featured: true },
-            { id: 'm2', title: 'Physics Chapterwise Handwritten Notes UDDAN Batch', category: 'Notes', thumb: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=500&auto=format&fit=crop&q=60', link: 'https://gplinks.co/sample2', featured: false },
-            { id: 'm3', title: 'Mathematics Previous Year Questions 2024-2025 Solved', category: 'PYQ', thumb: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=500&auto=format&fit=crop&q=60', link: 'https://gplinks.co/sample3', featured: true },
-            { id: 'm4', title: 'Chemistry Daily Practice Paper (DPP) Set 01', category: 'DPP', thumb: 'https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=500&auto=format&fit=crop&q=60', link: 'https://gplinks.co/sample4', featured: false }
+        let defaultFolders = [
+            { id: 'f1', name: 'Class 10 Material', icon: 'fa-graduation-cap text-sky-500' },
+            { id: 'f2', name: 'Class 12 Material', icon: 'fa-graduation-cap text-emerald-500' },
+            { id: 'f3', name: 'Handwritten Notes', icon: 'fa-book text-amber-500' }
         ];
 
+        let defaultMaterials = [
+            { id: 'm1', folderId: 'f1', title: 'Next Topper Sample Paper Class 10 Science 2026', category: 'Sample Paper', thumb: 'https://images.unsplash.com/photo-1543269865-cbf427effbad?w=500&auto=format&fit=crop&q=60', link: 'https://gplinks.co/sample1', featured: true },
+            { id: 'm2', folderId: 'f2', title: 'Physics Chapterwise Handwritten Notes UDDAN Batch', category: 'Notes', thumb: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=500&auto=format&fit=crop&q=60', link: 'https://gplinks.co/sample2', featured: false },
+            { id: 'm3', folderId: 'f1', title: 'Mathematics Previous Year Questions Solved', category: 'PYQ', thumb: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=500&auto=format&fit=crop&q=60', link: 'https://gplinks.co/sample3', featured: true }
+        ];
+
+        let folders = JSON.parse(localStorage.getItem('ekaki_folders')) || defaultFolders;
+        let materials = JSON.parse(localStorage.getItem('ekaki_materials')) || defaultMaterials;
+        
+        let currentFolderId = null;
         let activeFilter = 'ALL';
         let bookmarkedIds = JSON.parse(localStorage.getItem('ekaki_bookmarks')) || [];
         let downloadHistory = JSON.parse(localStorage.getItem('ekaki_history')) || [];
 
-        function renderGrid() {
+        function renderView() {
+            renderFolders();
+            renderMaterials();
+            updateBreadcrumb();
+            updateFolderDropdown();
+            updateBookmarkBadge();
+        }
+
+        function renderFolders() {
+            const container = document.getElementById('folderContainer');
+            container.innerHTML = '';
+
+            folders.forEach(f => {
+                let card = document.createElement('div');
+                let isActive = currentFolderId === f.id;
+                card.className = `p-4 rounded-2xl border transition cursor-pointer flex items-center justify-between ${isActive ? 'bg-sky-50 border-sky-500 shadow' : 'bg-white border-slate-200 hover:border-sky-300'}`;
+                card.onclick = () => selectFolder(f.id);
+                card.innerHTML = `
+                    <div class="flex items-center space-x-3">
+                        <i class="fa-solid ${f.icon} text-2xl"></i>
+                        <span class="font-bold text-sm text-slate-800">${f.name}</span>
+                    </div>
+                    <button onclick="event.stopPropagation(); deleteFolder('${f.id}')" class="text-slate-400 hover:text-rose-500 p-1" title="Delete Folder">
+                        <i class="fa-solid fa-trash text-xs"></i>
+                    </button>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function renderMaterials() {
             const grid = document.getElementById('materialGrid');
             const searchQuery = document.getElementById('searchInput').value.toLowerCase();
             const fallbackBox = document.getElementById('telegramFallback');
             grid.innerHTML = '';
-
-            let filtered = materialsData.filter(item => {
-                let matchesSearch = item.title.toLowerCase().includes(searchQuery);
-                let matchesFilter = activeFilter === 'ALL' || item.category === activeFilter;
-                return matchesSearch && matchesFilter;
-            });
-
-            if (filtered.length === 0) {
-                fallbackBox.classList.remove('hidden');
-                return;
-            } else {
-                fallbackBox.classList.add('hidden');
-            }
-
-            filtered.forEach((item, index) => {
-                let isBookmarked = bookmarkedIds.includes(item.id);
-                let card = document.createElement('div');
-                card.className = "bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition flex flex-col justify-between";
-                card.innerHTML = `
-                    <div class="relative">
-                        <img src="${item.thumb}" alt="${item.title}" class="w-full h-52 object-cover">
-                        ${item.featured ? '<span class="absolute top-3 left-3 bg-amber-500 text-white text-xs px-2.5 py-1 rounded-md font-bold uppercase shadow">Featured</span>' : ''}
-                        <div class="absolute top-3 right-3 flex space-x-2">
-                            <button onclick="copyDirectLink('${item.title}')" class="p-2 bg-white/90 backdrop-blur-md rounded-full shadow hover:bg-white text-slate-700 transition" title="Copy Link">
-                                <i class="fa-solid fa-share-nodes text-xs"></i>
-                            </button>
-                            <button onclick="toggleBookmark('${item.id}')" class="p-2 bg-white/90 backdrop-blur-md rounded-full shadow hover:bg-white transition" title="Save">
-                                <i class="fa-solid fa-heart ${isBookmarked ? 'text-rose-500 fill-rose-500' : 'text-slate-400'} text-xs"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="p-4 flex-1 flex flex-col justify-between">
-                        <h4 class="font-bold text-slate-800 text-base mb-4 line-clamp-2">${item.title}</h4>
-                        <button onclick="openDownloadModal('${item.title}', '${item.thumb}', '${item.link}')" class="w-full py-2.5 bg-emerald-600 text-white font-semibold rounded-xl hover:bg-emerald-700 flex items-center justify-center space-x-2 transition shadow">
-                            <i class="fa-solid fa-download text-xs"></i>
-                            <span>Download Material</span>
-                        </button>
-                    </div>
-                `;
-                grid.appendChild(card);
-
-                if ((index + 1) % 3 === 0) {
-                    let adSlot = document.createElement('div');
-                    adSlot.className = "col-span-full py-4 px-6 bg-slate-100 border border-dashed border-slate-300 rounded-2xl text-center text-slate-400 font-medium text-sm";
-                    adSlot.innerHTML = `📢 AdSense Banner Slot (Monetization Space)`;
-                    grid.appendChild(adSlot);
-                }
-            });
-            updateBookmarkBadge();
-        }
-
-        function setFilter(category) {
-            activeFilter = category;
-            document.querySelectorAll('.filter-chip').forEach(btn => {
-                btn.className = "filter-chip px-4 py-2 bg-white text-slate-600 border border-slate-200 rounded-xl text-sm font-semibold hover:bg-slate-100 whitespace-nowrap transition";
-            });
-            document.getElementById(`btn-${category}`).className = "filter-chip px-4 py-2 bg-sky-600 text-white rounded-xl text-sm font-semibold shadow-sm whitespace-nowrap transition";
-            renderGrid();
-        }
-
-        function toggleBookmark(id) {
-            if (bookmarkedIds.includes(id)) {
-                bookmarkedIds = bookmarkedIds.filter(item => item !== id);
-            } else {
-                bookmarkedIds.push(id);
-            }
-            localStorage.setItem('ekaki_bookmarks', JSON.stringify(bookmarkedIds));
-            renderGrid();
-        }
-
-        function updateBookmarkBadge() {
-            document.getElementById('bookmarkCount').innerText = bookmarkedIds.length;
-        }
-
-        function copyDirectLink(title) {
-            navigator.clipboard.writeText(window.location.href);
-            alert("Direct link copied to clipboard for: " + title);
-        }
-
-        function openDownloadModal(title, thumb, link) {
-            document.getElementById('modalTitle').innerText = title;
-            document.getElementById('modalThumb').src = thumb;
-            document.getElementById('modalLink').href = link;
-            document.getElementById('downloadModal').classList.remove('hidden');
-
-            if (!downloadHistory.includes(title)) {
-                downloadHistory.push(title);
-                localStorage.setItem('ekaki_history', JSON.stringify(downloadHistory));
-            }
-        }
-
-        function closeDownloadModal() {
-            document.getElementById('downloadModal').classList.add('hidden');
-        }
-
-        function toggleHamburgerMenu() {
-            let sidebar = document.getElementById('hamburgerSidebar');
-            let overlay = document.getElementById('sidebarOverlay');
-            sidebar.classList.toggle('-translate-x-full');
-            overlay.classList.toggle('hidden');
-        }
-
-        function openTelegramModal() {
-            document.getElementById('telegramModal').classList.remove('hidden');
-        }
-
-        function closeTelegramModal() {
-            document.getElementById('telegramModal').classList.add('hidden');
-        }
-
-        function openBookmarksModal() {
-            if(bookmarkedIds.length === 0) {
-                alert("Abhi koi saved bookmark nahi hai!");
-            } else {
-                alert("Aapke paas " + bookmarkedIds.length + " saved material(s) hain!");
-            }
-        }
-
-        function showDownloadHistory() {
-            if (downloadHistory.length === 0) {
-                alert("Abhi tak koi download history nahi hai.");
-            } else {
-                alert("Recent Downloads:\n- " + downloadHistory.join("\n- "));
-            }
-        }
-
-        function showUserActivity() {
-            alert("User Activity: Active Session Verified | Super Admin Security Status: Normal");
-        }
-
-        function submitFeedback(stars) {
-            alert("Feedback received: " + stars + " Star Rating! Thank you ⭐");
-        }
-
-        window.onload = renderGrid;
-    </script>
-</body>
-</html>
