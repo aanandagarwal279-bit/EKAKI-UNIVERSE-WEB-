@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EKAKI UNIVERSE - Premium Study Material & Notes</title>
+    <!-- Tailwind CSS for Modern UI -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans">
+
+    <!-- NAVBAR HEADER -->
+    <header class="sticky top-0 z-40 bg-white border-b border-slate-200 shadow-sm px-4 py-3 flex items-center justify-between">
+        <div class="flex items-center space-x-3">
+            <button class="p-2 hover:bg-slate-100 rounded-lg text-slate-700">
+                <i class="fa-solid fa-bars text-xl"></i>
+            </button>
+            <div class="font-extrabold text-xl text-sky-600 tracking-wider">
+                EKAKI UNIVERSE
+            </div>
+        </div>
+
+        <div class="hidden md:block font-medium text-sm text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
+            ✨ Premium Quality Study Material & Notes Platform
+        </div>
+
+        <div class="flex items-center space-x-3">
+            <button class="p-2 bg-sky-500 text-white rounded-full hover:bg-sky-600 transition shadow" title="Telegram Channels">
+                <i class="fa-brands fa-telegram"></i>
+            </button>
+            <button class="p-2 bg-slate-100 hover:bg-rose-50 rounded-full text-slate-600 relative" title="Saved Items">
+                <i class="fa-solid fa-heart text-lg"></i>
+            </button>
+            <button class="bg-sky-600 text-white px-4 py-1.5 rounded-lg text-sm font-semibold hover:bg-sky-700 transition shadow">
+                Login
+            </button>
+        </div>
+    </header>
+
+    <!-- MAIN CONTAINER -->
+    <main class="max-w-7xl mx-auto px-4 py-6">
+        
+        <!-- Search Bar -->
+        <div class="relative mb-6">
+            <input type="text" placeholder="Search material e.g. Sample Paper, Notes..." 
+                class="w-full pl-11 pr-4 py-3 bg-white border border-slate-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-500">
+            <i class="fa-solid fa-magnifying-glass text-slate-400 absolute left-4 top-4"></i>
+        </div>
+
+        <!-- Filter Chips -->
+        <div class="flex items-center space-x-2 overflow-x-auto pb-4 mb-4">
+            <button class="px-4 py-2 bg-sky-600 text-white rounded-lg text-sm font-semibold shadow-sm whitespace-nowrap">ALL</button>
+            <button class="px-4 py-2 bg-white text-slate-600 border border-slate-200 rounded-lg text-sm font-semibold hover:bg-slate-100 whitespace-nowrap">Sample Paper</button>
+            <button class="px-4 py-2 bg-white text-slate-600 border border-slate-200 rounded-lg text-sm font-semibold hover:bg-slate-100 whitespace-nowrap">Notes</button>
+            <button class="px-4 py-2 bg-white text-slate-600 border border-slate-200 rounded-lg text-sm font-semibold hover:bg-slate-100 whitespace-nowrap">PYQ</button>
+            <button class="px-4 py-2 bg-white text-slate-600 border border-slate-200 rounded-lg text-sm font-semibold hover:bg-slate-100 whitespace-nowrap">DPP</button>
+        </div>
+
+        <!-- 3-COLUMN MATERIAL GRID -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            
+            <!-- Card 1 -->
+            <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition flex flex-col justify-between">
+                <div class="relative">
+                    <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?w=500&auto=format&fit=crop&q=60" alt="Material" class="w-full h-56 object-cover">
+                    <span class="absolute top-3 left-3 bg-amber-500 text-white text-xs px-2.5 py-1 rounded-md font-bold uppercase">Featured</span>
+                    <div class="absolute top-3 right-3 flex space-x-2">
+                        <button class="p-2 bg-white/90 backdrop-blur-md rounded-full shadow hover:bg-white text-slate-700" title="Copy Link"><i class="fa-solid fa-share-nodes"></i></button>
+                        <button class="p-2 bg-white/90 backdrop-blur-md rounded-full shadow hover:bg-white text-slate-600"><i class="fa-solid fa-heart"></i></button>
+                    </div>
+                </div>
+                <div class="p-4 flex-1 flex flex-col justify-between">
+                    <h4 class="font-bold text-slate-800 text-base mb-4">Next Topper Sample Paper Class 10 Science 2026</h4>
+                    <button onclick="alert('Opening Preview & Download Page!')" class="w-full py-2.5 bg-emerald-600 text-white font-semibold rounded-xl hover:bg-emerald-700 flex items-center justify-center space-x-2 transition shadow">
+                        <i class="fa-solid fa-download"></i>
+                        <span>Download Material</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition flex flex-col justify-between">
+                <div class="relative">
+                    <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=500&auto=format&fit=crop&q=60" alt="Material" class="w-full h-56 object-cover">
+                    <div class="absolute top-3 right-3 flex space-x-2">
+                        <button class="p-2 bg-white/90 backdrop-blur-md rounded-full shadow hover:bg-white text-slate-700" title="Copy Link"><i class="fa-solid fa-share-nodes"></i></button>
+                        <button class="p-2 bg-white/90 backdrop-blur-md rounded-full shadow hover:bg-white text-slate-600"><i class="fa-solid fa-heart"></i></button>
+                    </div>
+                </div>
+                <div class="p-4 flex-1 flex flex-col justify-between">
+                    <h4 class="font-bold text-slate-800 text-base mb-4">Physics Chapterwise Handwritten Notes UDDAN</h4>
+                    <button onclick="alert('Opening Preview & Download Page!')" class="w-full py-2.5 bg-emerald-600 text-white font-semibold rounded-xl hover:bg-emerald-700 flex items-center justify-center space-x-2 transition shadow">
+                        <i class="fa-solid fa-download"></i>
+                        <span>Download Material</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition flex flex-col justify-between">
+                <div class="relative">
+                    <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=500&auto=format&fit=crop&q=60" alt="Material" class="w-full h-56 object-cover">
+                    <span class="absolute top-3 left-3 bg-amber-500 text-white text-xs px-2.5 py-1 rounded-md font-bold uppercase">Featured</span>
+                    <div class="absolute top-3 right-3 flex space-x-2">
+                        <button class="p-2 bg-white/90 backdrop-blur-md rounded-full shadow hover:bg-white text-slate-700" title="Copy Link"><i class="fa-solid fa-share-nodes"></i></button>
+                        <button class="p-2 bg-white/90 backdrop-blur-md rounded-full shadow hover:bg-white text-slate-600"><i class="fa-solid fa-heart"></i></button>
+                    </div>
+                </div>
+                <div class="p-4 flex-1 flex flex-col justify-between">
+                    <h4 class="font-bold text-slate-800 text-base mb-4">Mathematics Previous Year Questions 2024-2025</h4>
+                    <button onclick="alert('Opening Preview & Download Page!')" class="w-full py-2.5 bg-emerald-600 text-white font-semibold rounded-xl hover:bg-emerald-700 flex items-center justify-center space-x-2 transition shadow">
+                        <i class="fa-solid fa-download"></i>
+                        <span>Download Material</span>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- AdSense Banner Space Row -->
+        <div class="my-6 p-4 bg-slate-100 border border-dashed border-slate-300 rounded-2xl text-center text-slate-400 font-medium">
+            📢 AdSense Banner Space (High Revenue Monetization Slot)
+        </div>
+
+    </main>
+
+</body>
+</html>
